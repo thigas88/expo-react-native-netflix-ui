@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { StyleSheet, Dimensions, TouchableOpacity, Image, View } from 'react-native';
+import { StyleSheet, Dimensions, TouchableOpacity, Image, View, Pressable } from 'react-native';
 import { useEffect, useCallback, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { ThemedText } from '@/components/ThemedText';
@@ -255,56 +255,58 @@ export default function SwitchProfileScreen() {
 
     return (
         <View style={styles.container}>
-            <StatusBar animated={true} style={statusBarStyle.value} />
-            <Animated.View style={[styles.modalContent, animatedStyle]}>
-                <ScrollComponent>
-                    <View style={styles.switchProfileContainer}>
-                        <View style={styles.header}>
-                            <View style={styles.headerTitle}>
-                                <ThemedText style={styles.title}>Switch Profiles</ThemedText>
-                            </View>
-                            <TouchableOpacity style={styles.closeButton}>
-                                <Ionicons name="close-outline" size={24} color="#fff" />
-                            </TouchableOpacity>
-                        </View>
-
-                        <View style={styles.gridContainer}>
-                            {profiles.map((profile, index) => (
-                                <Animated.View
-                                    key={profile.id}
-                                    entering={FadeIn.delay(index * 100)}
-                                >
-                                    <TouchableOpacity
-                                        onPress={() => handleProfileSelect(profile.id)}
-                                        style={styles.profileButton}
-                                    >
-                                        <View style={styles.profileContainer}>
-                                            <Image
-                                                source={{ uri: profile.avatar }}
-                                                style={styles.avatar}
-                                            />
-                                            <ThemedText style={styles.profileName}>{profile.name}</ThemedText>
-                                        </View>
-                                    </TouchableOpacity>
-                                </Animated.View>
-                            ))}
-
-                            <TouchableOpacity style={styles.profileButton}>
-                                <View style={styles.addProfileContainer}>
-                                    <Ionicons name="add" size={44} color="#fff" />
+            <Pressable onPress={() => router.back()} style={styles.clickableContainer}>
+                <StatusBar animated={true} style={statusBarStyle.value} />
+                <Animated.View style={[styles.modalContent, animatedStyle]}>
+                    <ScrollComponent>
+                        <View style={styles.switchProfileContainer}>
+                            <View style={styles.header}>
+                                <View style={styles.headerTitle}>
+                                    <ThemedText style={styles.title}>Switch Profiles</ThemedText>
                                 </View>
-                                <ThemedText style={styles.addProfileText}>Add Profile</ThemedText>
+                                <TouchableOpacity onPress={() => router.back()} style={styles.closeButton}>
+                                    <Ionicons name="close-outline" size={24} color="#fff" />
+                                </TouchableOpacity>
+                            </View>
+
+                            <View style={styles.gridContainer}>
+                                {profiles.map((profile, index) => (
+                                    <Animated.View
+                                        key={profile.id}
+                                        entering={FadeIn.delay(index * 100 + 250)}
+                                    >
+                                        <TouchableOpacity
+                                            onPress={() => handleProfileSelect(profile.id)}
+                                            style={styles.profileButton}
+                                        >
+                                            <View style={styles.profileContainer}>
+                                                <Image
+                                                    source={{ uri: profile.avatar }}
+                                                    style={styles.avatar}
+                                                />
+                                                <ThemedText style={styles.profileName}>{profile.name}</ThemedText>
+                                            </View>
+                                        </TouchableOpacity>
+                                    </Animated.View>
+                                ))}
+
+                                <TouchableOpacity style={styles.profileButton}>
+                                    <View style={styles.addProfileContainer}>
+                                        <Ionicons name="add" size={44} color="#fff" />
+                                    </View>
+                                    <ThemedText style={styles.addProfileText}>Add Profile</ThemedText>
+                                </TouchableOpacity>
+
+                            </View>
+
+                            <TouchableOpacity style={styles.doneButton}>
+                                <Ionicons name="pencil" size={24} color="#ffffffba" />
+                                <ThemedText style={styles.doneButtonText}>Manage Profiles</ThemedText>
                             </TouchableOpacity>
-
                         </View>
-
-                        <TouchableOpacity style={styles.doneButton}>
-                            <Ionicons name="pencil" size={24} color="#ffffffba" />
-                            <ThemedText style={styles.doneButtonText}>Manage Profiles</ThemedText>
-                        </TouchableOpacity>
-                    </View>
-                </ScrollComponent>
-            </Animated.View>
+                    </ScrollComponent>
+                </Animated.View>
+            </Pressable>
         </View>
     );
 }
@@ -327,6 +329,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#0000008a',
+    },
+    clickableContainer: {
+        flex: 1
     },
     modalContent: {
         flex: 1,
