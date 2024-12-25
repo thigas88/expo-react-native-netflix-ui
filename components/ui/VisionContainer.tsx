@@ -1,8 +1,22 @@
-import { Platform, Pressable } from 'react-native';
-import styled from 'styled-components/native';
+import { Platform, Pressable, View, StyleSheet } from 'react-native';
 
-export const VisionContainer = styled.View`
-  ${Platform.select({
+export const VisionContainer = ({ style, ...props }) => (
+  <View style={[styles.visionContainer, style]} {...props} />
+);
+
+export const HoverableView = ({ style, ...props }) => (
+  <Pressable 
+    style={({ hovered }) => [
+      styles.hoverableView,
+      hovered && styles.hoverableViewHovered,
+      style
+    ]}
+    {...props}
+  />
+);
+
+const styles = StyleSheet.create({
+  visionContainer: Platform.select({
     visionOS: {
       padding: 20,
       borderRadius: 20,
@@ -12,21 +26,18 @@ export const VisionContainer = styled.View`
       shadowOpacity: 0.2,
       shadowRadius: 10,
     },
-    default: {
-      // regular styles
-    }
-  })}
-`;
-
-export const HoverableView = styled(Pressable)`
-  ${Platform.select({
+    default: {}
+  }),
+  hoverableView: Platform.select({
     visionOS: {
-      transform: [{scale: 1}],
-      transition: 'transform 0.2s',
-      ':hover': {
-        transform: [{scale: 1.05}],
-      }
+      transform: [{ scale: 1 }],
     },
     default: {}
-  })}
-`; 
+  }),
+  hoverableViewHovered: Platform.select({
+    visionOS: {
+      transform: [{ scale: 1.05 }],
+    },
+    default: {}
+  })
+});
