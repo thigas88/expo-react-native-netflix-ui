@@ -55,7 +55,7 @@ export function MovieList({ rowTitle, movies, type }: MovieRow) {
     const { isVisionOS } = useVisionOS();
 
     const renderItem = ({ item, index }) => (
-        <HoverableView key={`${item.id}-${index}`}>
+        <HoverableView key={`${item.id}-${index}`} style={{}}>
             <MovieItem
                 item={item}
                 router={router}

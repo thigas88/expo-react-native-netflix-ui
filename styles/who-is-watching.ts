@@ -110,4 +110,9 @@ export const styles = StyleSheet.create({
         position: 'absolute',
         borderRadius: 8,
     },
+    profileWrapper: {
+        position: 'relative',
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 });

@@ -81,6 +81,9 @@ export function WhoIsWatching({ onProfileSelect }: Props) {
 
     const handleProfileSelect = async (profile: Profile) => {
         try {
+
+            console.log(profile.name);
+
             const { sound } = await Audio.Sound.createAsync(
                 require('../assets/audio/profile-selected.mp3')
             );

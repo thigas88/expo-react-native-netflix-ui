@@ -10,6 +10,11 @@ export const styles = StyleSheet.create({
             default: '#000',
         }),
     },
+    visionContainer: {
+        flex: 1,
+        position: 'relative',
+        backgroundColor: '#111',
+    },
     gradient: {
         position: 'absolute',
         top: 0,
